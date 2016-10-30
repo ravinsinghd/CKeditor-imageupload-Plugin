@@ -37,6 +37,9 @@ CKEDITOR.plugins.add('ImageUpload', {
                                     xhr.onreadystatechange = function () {
                                         if (xhr.readyState == 4 && xhr.status == 201) {
                                             var imagePath = JSON.parse(xhr.responseText);
+                                            var anchor = editor.document.createElement('img');
+                                            anchor.setAttribute('src', "http://localhost:63901" + imagePath);
+                                            editor.insertElement(anchor);
                                         }
                                     }
                                     xhr.send(formData);
