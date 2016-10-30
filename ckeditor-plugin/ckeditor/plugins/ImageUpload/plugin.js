@@ -25,16 +25,20 @@ CKEDITOR.plugins.add('ImageUpload', {
                                 commit: function (element) {
                                     fileInput = this.getInputElement().$;
                                     file = fileInput.files[0];
-                                    /*CKEDITOR.ajax.post('http://localhost:63901/api/blob/assessmentImage', file,'', function (data) {
-                                        console.log(data);
-                                    });*/
+
                                     var formData = new FormData();
                                     formData.append(file.name, file);
+
                                     var xhr = new XMLHttpRequest();
                                     xhr.open('POST', 'http://localhost:63901/api/blob/assessmentImage', true);
                                     xhr.onload = function (e) {
                                         console.log(e);
-                                     };
+                                    };
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState == 4 && xhr.status == 201) {
+                                            var imagePath = JSON.parse(xhr.responseText);
+                                        }
+                                    }
                                     xhr.send(formData);
                                 }
                             }
